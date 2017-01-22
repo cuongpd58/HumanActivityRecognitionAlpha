@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">HumanActivityRecognition</string>
+
+    <string-array name="activities_array">
+        <item>Walk</item>
+        <item>Run</item>
+        <item>Bike</item>
+        <item>Car</item>
+    </string-array>
+
+    <string-array name="sex_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="sensor_array">
+        <item>Accelerometer</item>
+        <item>Gravity</item>
+        <item>Gyroscope</item>
+    </string-array>
+
+    <string-array name="mode_array">
+        <item>FAST_MODE</item>
+        <item>GAME_DELAY_MODE</item>
+        <item>NORMAL_MODE</item>
+    </string-array>
+</resources>

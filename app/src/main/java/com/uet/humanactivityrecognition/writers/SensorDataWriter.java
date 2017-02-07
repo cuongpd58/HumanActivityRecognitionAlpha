@@ -1,5 +1,6 @@
 package com.uet.humanactivityrecognition.writers;
 
+import android.os.Environment;
 import android.util.Log;
 
 import com.uet.humanactivityrecognition.constants.Constants;
@@ -36,10 +37,11 @@ public class SensorDataWriter {
     }
 
     private void makeFolder() {
-        File folder = new File(Constants.PATH.CSV_PATH);
+        File folder = new File(Environment.getExternalStorageDirectory().getPath(),
+                Constants.PATH.CSV_FOLDER);
 
         if (!folder.exists()){
-            boolean mkDir = folder.mkdirs();
+            boolean mkDir = folder.mkdir();
             Log.e("Make folder", mkDir + "");
         }
 
@@ -47,7 +49,15 @@ public class SensorDataWriter {
     }
 
     private void makeFile(String fileName){
-        fileToWriteTo = new File(Constants.PATH.CSV_PATH , fileName);
+        fileToWriteTo = new File(Environment.getExternalStorageDirectory().getPath() +
+                Constants.PATH.CSV_FOLDER , fileName);
+        if (!fileToWriteTo.exists()){
+            try {
+                fileToWriteTo.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public ArrayList<SimpleSensorData> getDatas() {

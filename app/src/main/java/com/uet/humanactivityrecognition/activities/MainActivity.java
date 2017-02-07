@@ -65,11 +65,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void initViews() {
+        spActivities = (Spinner)findViewById(R.id.sp_activities);
+        spMode = (Spinner)findViewById(R.id.sp_mode);
+        spSexual = (Spinner)findViewById(R.id.sp_sex);
+        spSensors = (Spinner)findViewById(R.id.sp_sensors);
 
-        spinnerSettings(spActivities,R.id.sp_activities, R.array.activities_array);
-        spinnerSettings(spMode,R.id.sp_mode,R.array.mode_array);
-        spinnerSettings(spSensors, R.id.sp_sensors, R.array.sensor_array);
-        spinnerSettings(spSexual, R.id.sp_sex, R.array.sex_array);
+        spinnerSettings(spActivities, R.array.activities_array);
+        spinnerSettings(spMode,R.array.mode_array);
+        spinnerSettings(spSensors, R.array.sensor_array);
+        spinnerSettings(spSexual, R.array.sex_array);
 
         edtEnterName = (EditText)findViewById(R.id.edt_enter_name);
         edtAge = (EditText)findViewById(R.id.edt_age);
@@ -79,9 +83,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         tgbtnCollectData.setOnCheckedChangeListener(this);
     }
 
-    private void spinnerSettings(Spinner spinner, int id, int array) {
-        spinner = (Spinner)findViewById(id);
-        spActivities = (Spinner)findViewById(R.id.sp_activities);
+    private void spinnerSettings(Spinner spinner, int array) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -91,8 +93,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String item = (String)parent.getItemAtPosition(position);
-        Toast.makeText(this,item,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -113,45 +113,86 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void stopCollectData() {
-        sensorMgr.unregisterListener(mAccelCollector,sensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
-        sensorMgr.unregisterListener(mGravCollector,sensorMgr.getDefaultSensor(Sensor.TYPE_GRAVITY));
-        sensorMgr.unregisterListener(mGyrosCollector,sensorMgr.getDefaultSensor(Sensor.TYPE_GYROSCOPE));
-
-        Log.e("Accel", mAccelCollector.getAccelerometerDatas().size() + "");
-
-        //Accelerometer
+        String sensor = (String)spSensors.getSelectedItem();
         String time = sdf.format(new Date());
-        String csvName = edtEnterName.getText().toString() + "_" + spActivities.getSelectedItem().toString()
-                + "_Accelerometer_" +time + Constants.PATH.CSV_FORMAT;
+        String csvName = null;
+        switch (sensor){
+            case Constants.SENSORS.ACCELEROMETER:
+                sensorMgr.unregisterListener(mAccelCollector,
+                        sensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
+                //Accelerometer
+                csvName = edtEnterName.getText().toString() + "_" + spActivities.getSelectedItem().toString()
+                        + "_Accelerometer_" +time + Constants.PATH.CSV_FORMAT;
 
-        CSVWriter = new SensorDataWriter(mAccelCollector.getAccelerometerDatas(), csvName);
-        CSVWriter.write();
+                CSVWriter = new SensorDataWriter(mAccelCollector.getAccelerometerDatas(), csvName);
+                CSVWriter.write();
+                mAccelCollector.resetData();
+                break;
+            case Constants.SENSORS.GRAVITY:
+                sensorMgr.unregisterListener(mGravCollector,
+                        sensorMgr.getDefaultSensor(Sensor.TYPE_GRAVITY));
+                //Gravity
+                csvName = edtEnterName.getText().toString() + "_" + spActivities.getSelectedItem().toString()
+                        + "_Gravity_" +time + Constants.PATH.CSV_FORMAT;
 
-        //Gravity
-        CSVWriter.setDatas(mGravCollector.getGravityDatas());
-        csvName = edtEnterName.getText().toString() + "_" + spActivities.getSelectedItem().toString()
-                + "_Gravity_" + time + Constants.PATH.CSV_FORMAT;
-        CSVWriter.setFileName(csvName);
-        CSVWriter.write();
+                CSVWriter = new SensorDataWriter(mGravCollector.getGravityDatas(), csvName);
+                CSVWriter.write();
+                mGravCollector.resetData();
+                break;
+            case Constants.SENSORS.GYROSCOPE:
+                sensorMgr.unregisterListener(mGyrosCollector,
+                        sensorMgr.getDefaultSensor(Sensor.TYPE_GYROSCOPE));
+                //Gyroscope
+                csvName = edtEnterName.getText().toString() + "_" + spActivities.getSelectedItem().toString()
+                        + "_Accelerometer_" +time + Constants.PATH.CSV_FORMAT;
 
-        //Gyroscope
-        CSVWriter.setDatas(mGyrosCollector.getGyroscopeDatas());
-        csvName = edtEnterName.getText().toString() + "_" + spActivities.getSelectedItem().toString()
-                + "_Gyroscope_" + time + Constants.PATH.CSV_FORMAT;
-        CSVWriter.setFileName(csvName);
-        CSVWriter.write();
-
-        mAccelCollector.resetData();
-        mGravCollector.resetData();
-        mGyrosCollector.resetData();
+                CSVWriter = new SensorDataWriter(mGyrosCollector.getGyroscopeDatas(), csvName);
+                CSVWriter.write();
+                mGyrosCollector.resetData();
+                break;
+            default:
+                break;
+        }
     }
 
+
     private void startCollectData() {
-        sensorMgr.registerListener(mAccelCollector,sensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                sensorMgr.SENSOR_DELAY_FASTEST);
-        sensorMgr.registerListener(mGravCollector,sensorMgr.getDefaultSensor(Sensor.TYPE_GRAVITY),
-                sensorMgr.SENSOR_DELAY_FASTEST);
-        sensorMgr.registerListener(mGyrosCollector,sensorMgr.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
-                sensorMgr.SENSOR_DELAY_FASTEST);
+        String sensor = (String)spSensors.getSelectedItem();
+        String mode = (String)spMode.getSelectedItem();
+        Log.e("start", sensor + ";" + mode);
+        int samplingPeriodUs = 0;
+        switch (mode){
+            case Constants.SAMPLING_PERIOD_US.DELAY_FASTEST:
+                samplingPeriodUs = sensorMgr.SENSOR_DELAY_FASTEST;
+                break;
+            case Constants.SAMPLING_PERIOD_US.DELAY_GAME:
+                samplingPeriodUs = sensorMgr.SENSOR_DELAY_GAME;
+                break;
+            case Constants.SAMPLING_PERIOD_US.DELAY_NORMAL:
+                samplingPeriodUs = sensorMgr.SENSOR_DELAY_NORMAL;
+                break;
+            default:
+                samplingPeriodUs = sensorMgr.SENSOR_DELAY_GAME;
+                break;
+        }
+        switch (sensor){
+            case Constants.SENSORS.ACCELEROMETER:
+                sensorMgr.registerListener(mAccelCollector,
+                        sensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                        samplingPeriodUs);
+                break;
+            case Constants.SENSORS.GRAVITY:
+                sensorMgr.registerListener(mGravCollector,
+                        sensorMgr.getDefaultSensor(Sensor.TYPE_GRAVITY),
+                        samplingPeriodUs);
+                break;
+            case Constants.SENSORS.GYROSCOPE:
+                sensorMgr.registerListener(mGyrosCollector,
+                        sensorMgr.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
+                        samplingPeriodUs);
+                break;
+            default:
+                break;
+        }
     }
 }

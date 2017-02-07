@@ -20,7 +20,7 @@
     </string-array>
 
     <string-array name="mode_array">
-        <item>FAST_MODE</item>
+        <item>FASTEST_MODE</item>
         <item>GAME_DELAY_MODE</item>
         <item>NORMAL_MODE</item>
     </string-array>

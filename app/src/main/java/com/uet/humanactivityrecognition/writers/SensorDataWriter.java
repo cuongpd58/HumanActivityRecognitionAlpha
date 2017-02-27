@@ -1,7 +1,8 @@
 package com.uet.humanactivityrecognition.writers;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 
 import com.uet.humanactivityrecognition.constants.Constants;
 import com.uet.humanactivityrecognition.sensordata.SimpleSensorData;
@@ -26,23 +27,30 @@ public class SensorDataWriter {
 
     private String fileName;
 
+    private String folderName;
+
     private FileWriter fileWriter;
 
     private File fileToWriteTo;
 
-    public SensorDataWriter(ArrayList<SimpleSensorData> datas, String fileName) {
+    private Context mContext;
+
+    public SensorDataWriter(Context mContext, ArrayList<SimpleSensorData> datas, String folderName,
+                            String fileName) {
+        this.mContext = mContext;
         this.datas = datas;
         this.fileName = fileName;
-        makeFolder();
+        this.folderName = folderName;
+        makeFolder(folderName);
     }
 
-    private void makeFolder() {
-        File folder = new File(Environment.getExternalStorageDirectory().getPath(),
-                Constants.PATH.CSV_FOLDER);
+    private void makeFolder(String folderName) {
+
+        File folder = new File(Environment.getExternalStorageDirectory().getPath()+
+                                Constants.PATH.CSV_FOLDER + folderName + "/");
 
         if (!folder.exists()){
-            boolean mkDir = folder.mkdir();
-            Log.e("Make folder", mkDir + "");
+            folder.mkdirs() ;
         }
 
         makeFile(fileName);
@@ -50,7 +58,7 @@ public class SensorDataWriter {
 
     private void makeFile(String fileName){
         fileToWriteTo = new File(Environment.getExternalStorageDirectory().getPath() +
-                Constants.PATH.CSV_FOLDER , fileName);
+                Constants.PATH.CSV_FOLDER + folderName , fileName);
         if (!fileToWriteTo.exists()){
             try {
                 fileToWriteTo.createNewFile();
@@ -77,28 +85,28 @@ public class SensorDataWriter {
         makeFile(fileName);
     }
 
-    public void write(){
+    public void write(String mode) {
+        ProgressDialog progressDialog =  ProgressDialog.show(mContext, "", "Saving datas...", true);
         fileWriter = null;
         try {
-            Log.e("Write before", fileToWriteTo.getAbsolutePath());
             fileWriter = new FileWriter(fileToWriteTo);
-//            FileOutputStream fileOutputStream = new FileOutputStream(fileToWriteTo);
-            Log.e("Writer after", "true");
-//            String dataString = null;
-            writeLine("Timestamp","X", "Y", "Z");
-            for (int i = 0; i < datas.size(); i++){
-                 writeLine(datas.get(i).getTimestamp() + "", datas.get(i).getX() + "",
+            fileWriter.append(mode);
+            fileWriter.append("\n");
+            fileWriter.append("Size: " + datas.size());
+            fileWriter.append("\n");
+            writeLine("Timestamp", "X", "Y", "Z");
+            for (int i = 0; i < datas.size(); i++) {
+                writeLine(datas.get(i).getTimestamp() + "", datas.get(i).getX() + "",
                         datas.get(i).getY() + "", datas.get(i).getZ() + "");
             }
             fileWriter.flush();
             fileWriter.close();
-//            fileOutputStream.write(dataString.getBytes());
-//            fileOutputStream.flush();
-//            fileOutputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
+        progressDialog.dismiss();
     }
+
 
     private void writeLine(String timestamp, String x, String y, String z) throws IOException {
         fileWriter.append(timestamp);
@@ -109,6 +117,5 @@ public class SensorDataWriter {
         fileWriter.append(",");
         fileWriter.append(z);
         fileWriter.append("\n");
-//        return  timestamp + "," + x + "," + y + "," + z + "\n";
     }
 }

@@ -1,5 +1,40 @@
 <resources>
     <string name="app_name">HumanActivityRecognition</string>
+    <string name="start">Start</string>
+    <string name="vehicle">Vehicle:</string>
+    <string name="user_name">User name:</string>
+    <string name="status">Status:</string>
+    <string name="walk">Walk</string>
+    <string name="bicycle">Bicycle</string>
+    <string name="motobike">Moto</string>
+    <string name="car">Car</string>
+    <string name="bus">Bus</string>
+    <string name="moving">Moving</string>
+    <string name="stop">Stop</string>
+    <string name="config">Config</string>
+    <string name="users">Users</string>
+    <string name="mode">Mode:</string>
+    <string name="select_user_dialog_title">Select user</string>
+    <string name="close">CLOSE</string>
+    <string name="new_user_dialog_title">New User</string>
+    <string name="YOB">Year of Birth:</string>
+    <string name="sex">Sex:</string>
+    <string name="job">Job:</string>
+    <string name="enter_name_hint">Enter your full name</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="YOB_edittext_hint">Enter your year of birth</string>
+    <string name="job_edittext_hint">Enter your job</string>
+    <string name="ok">OK</string>
+    <string name="please_add_user">Please add user information in user menu</string>
+    <string name="please_choose_vehicle">Please choose a vehicle</string>
+    <string name="please_choose_status">Please_choose_status</string>
+    <string name="add_user">Add user</string>
+    <string name="bike">Bike</string>
+    <string name="edt_name_warning">Your name cannot be empty!</string>
+    <string name="please_choose_sex">Please choose your sex</string>
+    <string name="edt_yob_warning">Your year of birth cannot be empty!</string>
+    <string name="edt_job_warning">Your job cannot be empty!</string>
 
     <string-array name="activities_array">
         <item>Walk</item>
@@ -20,8 +55,9 @@
     </string-array>
 
     <string-array name="mode_array">
-        <item>FASTEST_MODE</item>
-        <item>GAME_DELAY_MODE</item>
-        <item>NORMAL_MODE</item>
+        <item>SENSOR_DELAY_FASTEST</item>
+        <item>SENSOR_DELAY_GAME</item>
+        <item>SENSOR_DELAY_NORMAL</item>
+        <item>SENSOR_DELAY_UI</item>
     </string-array>
 </resources>

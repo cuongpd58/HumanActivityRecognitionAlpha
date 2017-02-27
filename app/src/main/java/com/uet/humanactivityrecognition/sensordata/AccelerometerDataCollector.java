@@ -12,9 +12,12 @@ import java.util.ArrayList;
 
 public class AccelerometerDataCollector implements SensorEventListener {
     private ArrayList<SimpleSensorData> accelerometerDatas;
+    private boolean hasGravitySensor;
+    private boolean hasMadSensor;
 
     public AccelerometerDataCollector(){
         accelerometerDatas = new ArrayList<>();
+
     }
 
     public AccelerometerDataCollector(ArrayList<SimpleSensorData> accelerometerDatas) {

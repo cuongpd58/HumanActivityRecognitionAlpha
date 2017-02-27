@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/start_layout_height"
+    android:minHeight="40dp"
+    app:behavior_peekHeight="@dimen/behavior_peek_height"
+    app:behavior_hideable="true"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    android:elevation="@dimen/pading"
+    android:background="@android:color/holo_blue_light">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/pading"
+        android:id="@+id/btn_start_collecting"
+        android:text="@string/start"
+        android:textColor="@android:color/white"
+        android:textSize="30dp"
+        android:layout_alignParentTop="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_centerInParent="true"
+        android:animateLayoutChanges="true"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="00:00"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/time_text_size"
+        android:layout_centerInParent="true"
+        android:id="@+id/tv_time_collect"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/padding_around_content_area"
+        android:layout_height="@dimen/image_button_size">
+        <ImageButton
+            android:layout_width="@dimen/image_button_size"
+            android:id="@+id/imb_control_collect_data"
+            android:src="@drawable/ic_play_arrow_white"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside"
+            android:layout_height="@dimen/image_button_size" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tv_vehicle_collecting"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/labels_text_size"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_height="@dimen/row_height" />
+        <ImageButton
+            android:layout_width="@dimen/image_button_size"
+            android:id="@+id/imb_stop_to_save_collect_data"
+            android:src="@drawable/ic_stop_white"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:scaleType="centerInside"
+            android:layout_height="@dimen/image_button_size" />
+    </RelativeLayout>
+</RelativeLayout>

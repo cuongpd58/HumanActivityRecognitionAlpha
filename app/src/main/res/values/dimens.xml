@@ -3,4 +3,23 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="min_height">40dp</dimen>
+    <dimen name="margin">24dp</dimen>
+    <dimen name="pading">8dp</dimen>
+    <dimen name="height_button">52dp</dimen>
+    <dimen name="row_height">36dp</dimen>
+    <dimen name="normal_text_size">14sp</dimen>
+    <dimen name="start_layout_height">300dp</dimen>
+    <dimen name="min_dialog_width">280dp</dimen>
+    <dimen name="large_text_size">18sp</dimen>
+    <dimen name="padding_around_content_area">24dp</dimen>
+    <dimen name="padding_between_text_and_body_dialog">20dp</dimen>
+    <dimen name="behavior_peek_height">100dp</dimen>
+    <dimen name="time_text_size">50dp</dimen>
+    <dimen name="image_button_size">50dp</dimen>
+    <dimen name="item_height">52dp</dimen>
+    <dimen name="row_heightx2">72dp</dimen>
+    <dimen name="small_text_size">12sp</dimen>
+    <dimen name="row_heightx5">180dp</dimen>
+    <dimen name="row_heightx4">144dp</dimen>
+    <dimen name="title_text_size">20sp</dimen>
 </resources>

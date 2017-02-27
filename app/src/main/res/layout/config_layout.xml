@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:minWidth="@dimen/min_dialog_width"
+    android:padding="@dimen/pading"
+    android:gravity="right"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/padding_around_content_area"
+        android:layout_marginLeft="@dimen/padding_around_content_area"
+        android:layout_marginRight="@dimen/padding_around_content_area"
+        android:layout_marginBottom="@dimen/padding_between_text_and_body_dialog"
+        android:text="@string/config"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/title_text_size"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:paddingLeft="@dimen/padding_around_content_area"
+        android:paddingRight="@dimen/padding_around_content_area"
+        android:layout_height="@dimen/row_height">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/mode"
+            android:textSize="@dimen/normal_text_size"
+            android:textColor="@android:color/black"
+            android:layout_marginRight="@dimen/pading"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/sp_mode"
+            android:layout_height="match_parent">
+        </Spinner>
+    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/padding_between_text_and_body_dialog"
+        android:background="?android:attr/selectableItemBackground"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="@dimen/large_text_size"
+        android:id="@+id/btn_ok_config"
+        android:text="@string/ok"
+        android:layout_height="@dimen/row_height" />
+</LinearLayout>
